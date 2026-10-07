@@ -112,18 +112,18 @@ export function Tracker({ token, user, onLogout, onAuthError }) {
   ];
 
   return (
-    <div className="min-h-screen bg-white text-neutral-950">
+    <div className="min-h-screen bg-white text-neutral-950 overflow-x-hidden">
       <BeamsBackground className="h-[320px] md:h-[380px]">
         <button
           onClick={onLogout}
           className="absolute top-5 right-5 md:right-8 text-xs uppercase tracking-wider text-white/50 hover:text-white transition-colors"
         >
-          {user?.name ? `${user.name} · Sign out` : 'Sign out'}
+
         </button>
         <div className="text-center px-4">
           <p className="text-xs tracking-[0.3em] uppercase text-white/50 mb-3">Job Search</p>
           <h1 className="text-4xl md:text-6xl font-semibold tracking-tighter text-white">Application Tracker</h1>
-          <div className="mt-8 flex justify-center gap-10">
+          <div className="mt-8 flex flex-wrap justify-center gap-x-5 gap-y-3 sm:gap-x-10 px-4">
             <Stat value={apps.length} label="Total" />
             <Stat value={count('Interview')} label="Interview" />
             <Stat value={count('Offer')} label="Offer" />
