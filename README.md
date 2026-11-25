@@ -2,8 +2,8 @@
 
 A full-stack MERN app for tracking job applications through Applied, Interview, Offer and Rejected stages — with its own account system, so each user only sees their own list.
 
-**Live demo:** _add your Vercel link here_
-**API:** _add your Render link here_
+**Live demo:** https://job-tracker-zeta-lac.vercel.app/
+
 
 ## Features
 
