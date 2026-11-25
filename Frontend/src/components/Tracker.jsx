@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { BeamsBackground } from '@/components/BeamsBackground';
 import { MorphPanel } from '@/components/MorphPanel';
 import { SegmentedTabs } from '@/components/SegmentedTabs';
+import { SortMenu } from '@/components/SortMenu';
 
 const API = `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/applications`;
 const STATUSES = ['Applied', 'Interview', 'Offer', 'Rejected'];
@@ -112,18 +113,19 @@ export function Tracker({ token, user, onLogout, onAuthError }) {
   ];
 
   return (
-    <div className="min-h-screen bg-white text-neutral-950">
+    <div className="min-h-screen bg-white text-neutral-950 overflow-x-hidden">
       <BeamsBackground className="h-[320px] md:h-[380px]">
         <button
           onClick={onLogout}
-          className="absolute top-5 right-5 md:right-8 text-xs uppercase tracking-wider text-white/50 hover:text-white transition-colors"
+          className="absolute top-5 right-5 md:right-8 rounded-full border border-white/40 bg-white/10 backdrop-blur-sm px-3.5 py-1.5 text-xs uppercase tracking-wider text-white hover:bg-white/20 hover:border-white/70 transition-colors"
         >
-          {user?.name ? `${user.name} · Sign out` : 'Sign out'}
+          {user?.name && <span className="hidden sm:inline">{user.name} &middot; </span>}
+          Sign out
         </button>
         <div className="text-center px-4">
           <p className="text-xs tracking-[0.3em] uppercase text-white/50 mb-3">Job Search</p>
           <h1 className="text-4xl md:text-6xl font-semibold tracking-tighter text-white">Application Tracker</h1>
-          <div className="mt-8 flex justify-center gap-10">
+          <div className="mt-8 flex flex-wrap justify-center gap-x-5 gap-y-3 sm:gap-x-10 px-4">
             <Stat value={apps.length} label="Total" />
             <Stat value={count('Interview')} label="Interview" />
             <Stat value={count('Offer')} label="Offer" />
@@ -134,7 +136,7 @@ export function Tracker({ token, user, onLogout, onAuthError }) {
 
       <main className="max-w-3xl mx-auto px-4 md:px-6 -mt-10 relative z-10 pb-20">
         <div className="mb-8">
-          <MorphPanel open={showForm} onOpenChange={setShowForm} triggerLabel="+ Log an application">
+          <MorphPanel open={showForm} onOpenChange={setShowForm} triggerLabel="+ Add an application">
             <form onSubmit={submit} className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <h2 className="col-span-full text-lg font-medium">{editingId ? 'Edit entry' : 'New entry'}</h2>
               <label className="flex flex-col gap-1 text-xs uppercase tracking-wider text-white/50">
@@ -184,22 +186,14 @@ export function Tracker({ token, user, onLogout, onAuthError }) {
 
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
           <SegmentedTabs options={tabOptions} value={filter} onChange={setFilter} />
-          <div className="flex gap-3">
+          <div className="flex items-center gap-3">
             <input
               placeholder="Search"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="rounded-full border border-neutral-200 bg-neutral-50 px-4 py-1.5 text-sm focus:outline-none focus:border-neutral-950 w-36"
+              className="flex-1 md:w-36 md:flex-none rounded-full border border-neutral-200 bg-neutral-50 px-4 py-1.5 text-sm focus:outline-none focus:border-neutral-950"
             />
-            <select
-              value={sort}
-              onChange={(e) => setSort(e.target.value)}
-              className="rounded-full border border-neutral-200 bg-neutral-50 px-3 py-1.5 text-sm focus:outline-none focus:border-neutral-950"
-            >
-              <option value="newest">Newest</option>
-              <option value="oldest">Oldest</option>
-              <option value="company">A to Z</option>
-            </select>
+            <SortMenu value={sort} onChange={setSort} />
           </div>
         </div>
 

@@ -60,7 +60,7 @@ const requireAuth = (req, res, next) => {
   }
 };
 
-const signToken = (user) => jwt.sign({ sub: user._id.toString() }, JWT_SECRET, { expiresIn: '30d' });
+const signToken = (user) => jwt.sign({ sub: user._id.toString() }, JWT_SECRET, { expiresIn: '24h' });
 const publicUser = (user) => ({ id: user._id, name: user.name, email: user.email });
 
 app.get('/', (req, res) => res.send('Job tracker API is running'));
